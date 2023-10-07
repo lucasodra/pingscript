@@ -35,9 +35,9 @@ def ping(vpn):
 
     output_file = 'ping_results.csv'
 
-    with open(output_file, 'w', newline='') as csvfile:
+    with open(output_file, 'a+', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['VPN', 'DateTime', 'Website', 'IP Address', 'TTL', 'Time (ms)'])
+        #writer.writerow(['vpn', 'datetime', 'website', 'ip', 'ttl', 'time'])
 
         for website in websites:
             current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')

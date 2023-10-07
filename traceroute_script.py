@@ -53,7 +53,7 @@ def traceroute(vpn):
     tracerouteFileName = 'traceroute_output.csv'
     with open(tracerouteFileName, "a+", newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['website','datetime', 'hop', 'vpn', 'ip', 'speed1', 'speed2', 'speed3'])
+        #writer.writerow(['website','datetime', 'hop', 'vpn', 'ip', 'speed1', 'speed2', 'speed3'])
         writer.writerows(results)
 
     print(f'{tracerouteFileName} extraction completed.')

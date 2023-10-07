@@ -65,12 +65,13 @@ def get_whois(ip):
         print(f"Error fetching WHOIS for {ip}: {e}")
         return data
 
-df = pd.read_csv("traceroute_output.csv")
-unique_ips = set(df['ip'])
+def whois():
+    df = pd.read_csv("traceroute_output.csv")
+    unique_ips = set(df['ip'])
 
-whois_data = {ip: get_whois(ip) for ip in unique_ips}
+    whois_data = {ip: get_whois(ip) for ip in unique_ips}
 
-for key in whois_info.keys():
-    df[key] = df['ip'].map(lambda x: whois_data[x].get(key, ''))
+    for key in whois_info.keys():
+        df[key] = df['ip'].map(lambda x: whois_data[x].get(key, ''))
 
-df.to_csv("whois_output.csv", index=False)
+    df.to_csv("whois_output.csv", index=False)
