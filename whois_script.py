@@ -1,12 +1,22 @@
 import subprocess
 import pandas as pd
 import re
-from geopy.geocoders import Nominatim
-import time
 
 whois_info = {
+    'type': '',
+    'netrange': '',
+    'cidr': '',
     'inetnum': '',
     'netname': '',
+    'nethandle': '',
+    'parent': '',
+    'nettype': '',
+    'originas': '',
+    'organization': '',
+    'regdate': '',
+    'updated': '',
+    'ref': '',
+    'orgid': '',
     'descr': '',
     'country': '',
     'admin-c': '',
@@ -25,20 +35,18 @@ whois_info = {
     'fax-no': '',
     'nic-hdl': '',
     'route': '',
-    'origin': ''
+    'origin': '',
+    'stateprov': '',
+    'postalcode': '',
+    'comment': '',
+    'Country': '',
+    'city': '',
+    'City': '',
+    'orgname': '',
+    'orgName': '',
+    'org-name': '',
+    'OrgName': ''
 }
-
-geolocator = Nominatim(user_agent="geoapiExercises")
-def get_lat_lon(address, country):
-    try:
-        location = geolocator.geocode(f"{address}, {country}")
-        if location:
-            return location.latitude, location.longitude
-        else:
-            return None, None
-    except Exception as e:
-        print(f"Error geocoding {address}, {country}: {e}")
-        return None, None
 
 def get_whois(ip):
     data = whois_info.copy()
