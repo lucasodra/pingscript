@@ -50,7 +50,7 @@ def traceroute(vpn):
             print(f"Error executing traceroute for {website}: {str(e)}")
 
     print('Extracting traceroute')
-    tracerouteFileName = str(datetime.datetime.now().strftime('%d-%m-%Y')) + '_traceroute_output.csv'
+    tracerouteFileName = 'traceroute_output.csv'
     with open(tracerouteFileName, "a+", newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['website','datetime', 'hop', 'vpn', 'ip', 'speed1', 'speed2', 'speed3'])

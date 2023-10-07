@@ -1,2 +1,3 @@
-.csv
-.txt
+ping_results.csv
+traceroute_output.csv
+whois_output.csv
