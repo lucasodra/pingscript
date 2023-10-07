@@ -3,10 +3,10 @@
 1. **Edit target.csv:** Open the `target.csv` file and enter the e-commerce websites that you are looking for. Make sure to consider the domain extensions that are applicable to the country you are searching from. For example, if you are searching from Singapore, use the `.sg` extension. Additionally, ensure that the e-commerce websites you enter are valid by conducting your own search on your preferred search engine.
 
 ```csv
-#target.csv
-# e.g If your vpn is set to Singapore. Ensure you put a comma after every website
-amazon.sg,
-shopee.sg,
+# target.csv
+# e.g If your vpn is set to Singapore
+amazon.sg
+shopee.sg
 .
 .
 .
