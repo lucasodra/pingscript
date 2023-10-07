@@ -1,37 +1,41 @@
-import subprocess
-from datetime import datetime
-import re
+import whois
+import pandas as pd
 
-inputFile = input('Enter filename here: ')
-filename = str(datetime.now().strftime('%d-%m-%Y %H%M HRS')) + '_whois_output.txt'
-print('whois analysis loading...')
-# Open the text file containing IP addresses
-with open(inputFile, 'r') as textfile:
-    # Create or open the output file for country information
-    with open(filename, 'w') as outputfile:
-        for line in textfile:
-            # Remove leading and trailing whitespace from each line
-            ip = line.strip()
+def get_whois(ip):
+    try:
+        w = whois.whois(ip)
+        return [
+            w.get('type', ''),
+            w.get('netrange', ''),
+            w.get('cidr', ''),
+            w.get('netname', ''),
+            w.get('nethandle', ''),
+            w.get('parent', ''),
+            w.get('nettype', ''),
+            w.get('originas', ''),
+            w.get('organization', ''),
+            w.get('regdate', ''),
+            w.get('updated', ''),
+            w.get('ref', ''),
+            w.get('orgname', ''),
+            w.get('orgid', ''),
+            w.get('address', ''),
+            w.get('city', ''),
+            w.get('stateprov', ''),
+            w.get('postalcode', ''),
+            w.get('country', ''),
+            w.get('regdate', ''),
+            w.get('updated', ''),
+        ] + w.get('comment', [''] * 8)
+    except Exception as e:
+        print(f"Error fetching WHOIS for {ip}: {e}")
+        return [''] * 31
 
-            # Run the whois command and capture its output
-            whois_output = subprocess.check_output(['whois', ip], universal_newlines=True)
+df = pd.read_csv("traceroute_output.csv")
 
-            # Search for the country information in the whois output
-            country = ''
-            city = ''
-            orgname = ''
-            for whois_line in whois_output.split('\n'):
-                if re.search(r'(?i)Country', whois_line):
-                    country = whois_line.split(':')[-1].strip()
-                elif re.search(r'(?i)City', whois_line):
-                    city = whois_line.split(':')[-1].strip()
-                elif re.search(r'(?i)OrgName', whois_line):
-                    orgname = whois_line.split(':')[-1].strip()
-                elif re.search(r'(?i)Org-Name', whois_line):
-                    orgname = whois_line.split(':')[-1].strip()
+df[['Type','NetRange','CIDR','NetName','NetHandle','Parent','NetType','OriginAS','Organization','RegDate','Updated',
+    'Ref','OrgName','OrgId','Address','City','StateProv','PostalCode','Country','RegDate2','Updated2',
+    'Comment1','Comment2','Comment3','Comment4','Comment5','Comment6','Comment7','Comment8', 'Comment_Link']] = df.apply(
+    lambda row: get_whois(row['ip']), axis=1, result_type="expand")
 
-            # Write the IP address and country information to the output file
-            outputfile.write(f"IP Address: {ip}, Country: {country}, City: {city}, OrgName: {orgname}\n")   
-
-print("whois extraction completed.")
-
+df.to_csv("traceroute_with_whois.csv", index=False)
