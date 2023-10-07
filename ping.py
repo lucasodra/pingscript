@@ -1,6 +1,7 @@
 import subprocess
 import csv
 import re
+from datetime import datetime
 
 def ping_website(website):
     try:
@@ -23,18 +24,22 @@ def parse_ping_output(output):
     return results
 
 def main():
-    websites = ['craftwills.com', 'amazon.sg', 'shopee.sg', 'lazada.sg']
+    with open('target.csv', 'r') as file:
+        reader = csv.reader(file)
+        websites = [row[0] for row in reader]
+
     output_file = 'ping_results.csv'
 
     with open(output_file, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['Website', 'IP Address', 'TTL', 'Time (ms)'])
+        writer.writerow(['DateTime', 'Website', 'IP Address', 'TTL', 'Time (ms)'])
 
         for website in websites:
+            current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             output = ping_website(website)
             parsed_results = parse_ping_output(output)
             for result in parsed_results:
-                writer.writerow([website, result['ip'], result['ttl'], result['time']])
+                writer.writerow([current_datetime, website, result['ip'], result['ttl'], result['time']])
 
     print(f"Results saved to {output_file}")
 
