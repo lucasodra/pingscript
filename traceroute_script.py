@@ -4,7 +4,6 @@ import csv
 import datetime
 
 def traceroute(vpn):
-    vpnCountry = vpn
     with open("target.csv", "r") as file:
         websites = [line.strip() for line in file]
 
@@ -13,7 +12,7 @@ def traceroute(vpn):
     for website in websites:
         try:
             print(f'Tracerouting {website} - Do not end the process')
-            cmd_output = subprocess.check_output(['traceroute', '-w', '5', '-m', '10', website], universal_newlines=True, stderr=subprocess.STDOUT)
+            cmd_output = subprocess.check_output(['traceroute', '-w', '1', '-m', '20', website], universal_newlines=True, stderr=subprocess.STDOUT)
 
             current_hop = None
             sub_hop = 0

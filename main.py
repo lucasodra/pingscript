@@ -13,9 +13,12 @@ def main():
 
     while True:
         # Call your function
-        traceroute(vpn)
-        whois()
-        ping(vpn)
+        try:
+            traceroute(vpn)
+            whois()
+            ping(vpn)
+        except:
+            print('error')
         
         # Sleep for the specified interval
         time.sleep(interval)
