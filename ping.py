@@ -24,6 +24,11 @@ def parse_ping_output(output):
     return results
 
 def main():
+    # ################
+    # UPDATE THIS ONLY
+    # ################
+    vpnCountry = "Singapore"
+
     with open('target.csv', 'r') as file:
         reader = csv.reader(file)
         websites = [row[0] for row in reader]
@@ -32,14 +37,14 @@ def main():
 
     with open(output_file, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['DateTime', 'Website', 'IP Address', 'TTL', 'Time (ms)'])
+        writer.writerow(['VPN', 'DateTime', 'Website', 'IP Address', 'TTL', 'Time (ms)'])
 
         for website in websites:
             current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             output = ping_website(website)
             parsed_results = parse_ping_output(output)
             for result in parsed_results:
-                writer.writerow([current_datetime, website, result['ip'], result['ttl'], result['time']])
+                writer.writerow([vpnCountry, current_datetime, website, result['ip'], result['ttl'], result['time']])
 
     print(f"Results saved to {output_file}")
 
