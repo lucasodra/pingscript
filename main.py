@@ -15,12 +15,12 @@ def main():
         # Call your function
         try:
             traceroute(vpn)
-            whois()
+            #whois()
             ping(vpn)
         except:
             print('error')
         
-        # # Sleep for the specified interval
+        # Sleep for the specified interval
         # time.sleep(interval)
 
 if __name__ == '__main__':
