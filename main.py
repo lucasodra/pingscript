@@ -9,7 +9,7 @@ def main():
     vpn = input('Enter the country you are searching from: ')
 
     # Set the interval in seconds (1 hour = 3600 seconds)
-    interval = 3600
+    # interval = 3600
 
     while True:
         # Call your function
@@ -20,8 +20,8 @@ def main():
         except:
             print('error')
         
-        # Sleep for the specified interval
-        time.sleep(interval)
+        # # Sleep for the specified interval
+        # time.sleep(interval)
 
 if __name__ == '__main__':
     main()
