@@ -16,12 +16,17 @@ def ipinfo(ip_address):
             json_data = json_match.group(0)
             ip_info = json.loads(json_data)
 
+            # Split the "loc" value into latitude and longitude
+            loc = ip_info.get('loc', '')
+            lat, lon = loc.split(',')
+
             # Append JSON information to the same row
             ip_info = {
                 "city": ip_info.get('city', ''),
                 "region": ip_info.get('region', ''),
                 "country": ip_info.get('country', ''),
-                "loc": ip_info.get('loc', ''),
+                "lat": lat,
+                "lon": lon,
                 "org": ip_info.get('org', ''),
                 "timezone": ip_info.get('timezone', '')
             }
@@ -42,7 +47,7 @@ def main():
 
             # Write headers to the new file
             headers = ["website", "datetime", "hop", "vpn", "ip", "speed1", "speed2", "speed3",
-                       "city", "region", "country", "loc", "org", "timezone"]
+                       "city", "region", "country", "lat", "lon", "org", "timezone"]
             csv_writer.writerow(headers)
 
             # Iterate through every website and get their IP address
